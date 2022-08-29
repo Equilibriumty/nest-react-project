@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model Student {
+  id        Int                  @id @default(autoincrement())
+  username  String               @unique
+  email     String               @unique
+  password  String
+  role      Role                 @default(STUDENT)
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  course    CoursesAndStudends[]
+  // Course             Course?              @relation(fields: [courseId], references: [id])
+  // courseId           Int?
+  Course    Course?              @relation(fields: [courseId], references: [id])
+  courseId  Int?
+}
+
+model CoursesAndStudends {
+  student   Student @relation(fields: [studentId], references: [id])
+  course    Course  @relation(fields: [courseId], references: [id])
+  studentId Int
+  courseId  Int
+  task      Task    @relation(fields: [taskId], references: [taskId])
+  taskId    Int
+
+  @@id([courseId, studentId, taskId])
+}
+
+model Teacher {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  role      Role     @default(TEACHER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  courses   Course[]
+}
+
+model Task {
+  taskId             Int                  @id @default(autoincrement())
+  title              String
+  description        String
+  uploadedAt         DateTime             @default(now())
+  mark               Int
+  fileId             String
+  Course             Course?              @relation(fields: [courseId], references: [id])
+  courseId           Int?
+  CoursesAndStudends CoursesAndStudends[]
+}
+
+model Course {
+  id                 Int                  @id @default(autoincrement())
+  title              String
+  description        String
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  tasks              Task[]
+  Teacher            Teacher?             @relation(fields: [teacherId], references: [id])
+  teacherId          Int?
+  students           Student[]
+  CoursesAndStudends CoursesAndStudends[]
+}
+
+enum Role {
+  TEACHER
+  STUDENT
+}

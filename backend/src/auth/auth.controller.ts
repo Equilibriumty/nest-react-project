@@ -37,16 +37,16 @@ export class AuthController {
     return this.authService.registerStudent(createStudentDto);
   }
 
-  @UseGuards(LocalAuthGuard)
   @Post('/loginTeacher')
+  @UseGuards(LocalAuthGuard)
   async loginTeacher(
     @Body(new ValidationPipe()) loginTeacherDto: LoginTeacherDto,
   ) {
     return this.authService.loginTeacher(loginTeacherDto);
   }
 
-  @UseGuards(LocalAuthGuard)
   @Post('/loginStudent')
+  @UseGuards(LocalAuthGuard)
   async loginStudent(
     @Body(new ValidationPipe()) loginStudentDto: LoginStudentDto,
   ) {

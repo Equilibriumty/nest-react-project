@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
-import { LocalStrategy } from '../strategies/local.strategy';
+import { LocalTeacherStrategy } from '../strategies/local.teacherStrategy';
+import { LocalStudentStrategy } from '../strategies/local.studentStrategy';
 import { AuthController } from './auth.controller';
-import { JwtStrategy } from 'src/strategies/jwt.strategy';
+import { JwtStudentStrategy } from 'src/strategies/jwt.studentStrategy';
+import { JwtTeacherStrategy } from 'src/strategies/jwt.teacherStrategy';
 import { PrismaService } from 'src/prisma.service';
 import { TeachersModule } from 'src/teachers/teachers.module';
 import { StudentsModule } from 'src/students/students.module';
@@ -21,9 +23,11 @@ import { StudentsModule } from 'src/students/students.module';
   ],
   providers: [
     AuthService,
-    LocalStrategy,
+    LocalStudentStrategy,
+    LocalTeacherStrategy,
     JwtService,
-    JwtStrategy,
+    JwtStudentStrategy,
+    JwtTeacherStrategy,
     PrismaService,
   ],
   exports: [AuthService],

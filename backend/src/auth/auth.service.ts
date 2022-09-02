@@ -5,6 +5,7 @@ import { CreateStudentDto } from 'src/students/dto/create-student.dto';
 import { TeachersService } from 'src/teachers/teachers.service';
 import { StudentsService } from 'src/students/students.service';
 import { LoginStudentDto } from 'src/students/dto/login-student.dto';
+import { LoginTeacherDto } from 'src/teachers/dto/teacher-login.dto';
 
 @Injectable()
 export class AuthService {
@@ -54,7 +55,7 @@ export class AuthService {
     };
   }
 
-  async loginTeacher(teacher: LoginStudentDto) {
+  async loginTeacher(teacher: LoginTeacherDto) {
     return {
       ...teacher,
       token: this.generateJwtToken(teacher),

@@ -2,15 +2,15 @@ import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from '../auth/auth.service';
-import { Student, Teacher } from '@prisma/client';
+import { Teacher } from '@prisma/client';
 
 @Injectable()
-export class LocalStrategy extends PassportStrategy(Strategy) {
+export class LocalTeacherStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
     super({ usernameField: 'email' });
   }
 
-  async validateTeacher(
+  async validate(
     email: string,
     password: string,
   ): Promise<Omit<Teacher, 'password'>> {
@@ -19,16 +19,5 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException();
     }
     return teacher;
-  }
-
-  async validateStudent(
-    email: string,
-    password: string,
-  ): Promise<Omit<Student, 'password'>> {
-    const student = await this.authService.validateStudent(email, password);
-    if (!student) {
-      throw new UnauthorizedException();
-    }
-    return student;
   }
 }

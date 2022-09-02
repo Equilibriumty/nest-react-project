@@ -23,13 +23,20 @@ export const registerValidationScheme = yup.object().shape({
     .max(20, 'Max length is 20 characters'),
 });
 
-export interface LoginInitialValues {
+export type LoginInitialValues = {
+  id: number;
   email: string;
   password: string;
-}
+};
 
-export interface RegisterInitialValues {
+export type RegisterInitialValues = {
   email: string;
   username: string;
   password: string;
-}
+  role: string;
+};
+
+export type StudentReg = RegisterInitialValues;
+export type TeacherReg = RegisterInitialValues;
+export type TeacherLog = LoginInitialValues;
+export type StudentLog = LoginInitialValues;

@@ -1,6 +1,6 @@
 import { Button, TextField, Typography } from '@mui/material';
 import { FormikErrors } from 'formik';
-import { RegisterInitialValues } from '../types/validations';
+import { RegisterInitialValues } from '../types/types';
 
 interface RegisterSharedInputsProps {
   role: string;

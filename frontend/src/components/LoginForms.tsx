@@ -1,17 +1,64 @@
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import LoginSharedInputs from './LoginSharedInputs';
 import {
   LoginInitialValues,
   loginValidationScheme,
-} from '../types/validations';
+  StudentLog,
+  TeacherLog,
+} from '../types/types';
+import { useMutation } from 'react-query';
+import authApi from '../service/auth.service';
+import { useNavigate } from 'react-router-dom';
+import { AxiosResponse } from 'axios';
 
 const LoginForms = () => {
-  const initialValues: LoginInitialValues = { email: '', password: '' };
+  const initialValues: LoginInitialValues = {
+    id: 123,
+    email: '',
+    password: '',
+  };
+  const navigation = useNavigate();
+  const loginStudent = useMutation(
+    (values: StudentLog) => authApi.loginStudent(values),
+    {
+      onSuccess: async (response: AxiosResponse) => {
+        localStorage.setItem('token', response.data.token);
+        navigation('/');
+      },
+      onError: (error) => console.log(error),
+    }
+  );
+
+  const loginTeacher = useMutation(
+    (values: TeacherLog) => authApi.loginTeacher(values),
+    {
+      onSuccess: async (response: AxiosResponse) => {
+        localStorage.setItem('token', response.data.token);
+        navigation('/');
+      },
+      onError: (error) => console.log(error),
+    }
+  );
+  const handleTeacherSubmit = (
+    values: LoginInitialValues,
+    actions: FormikHelpers<LoginInitialValues>
+  ) => {
+    actions.resetForm();
+    loginTeacher.mutate(values);
+  };
+
+  const handleStudentSubmit = (
+    values: LoginInitialValues,
+    actions: FormikHelpers<LoginInitialValues>
+  ) => {
+    actions.resetForm();
+    loginStudent.mutate(values);
+  };
   return (
     <div>
       <Formik
         initialValues={initialValues}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={handleTeacherSubmit}
         validationSchema={loginValidationScheme}
         validateOnMount
       >
@@ -28,7 +75,7 @@ const LoginForms = () => {
       </Formik>
       <Formik
         initialValues={initialValues}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={handleStudentSubmit}
         validationSchema={loginValidationScheme}
         validateOnMount
       >

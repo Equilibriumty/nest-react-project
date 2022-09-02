@@ -1,13 +1,21 @@
 import { Button, TextField, Typography } from '@mui/material';
-import { Formik } from 'formik';
-import React from 'react';
+import { FormikErrors } from 'formik';
+import { LoginInitialValues } from '../types/validations';
 
 interface LoginSharedInputsProps {
   role: string;
-  errors: any;
-  values: any;
-  handleSubmit: any;
-  handleChange: any;
+  errors: FormikErrors<LoginInitialValues>;
+  values: LoginInitialValues;
+  isValid: boolean;
+  handleSubmit: () => void;
+  handleChange: {
+    (e: React.ChangeEvent<any>): void;
+    <T = string | React.ChangeEvent<any>>(
+      field: T
+    ): T extends React.ChangeEvent<any>
+      ? void
+      : (e: string | React.ChangeEvent<any>) => void;
+  };
 }
 // TODO FIX TYPINGS AND ADD VALIDATION VIA YUP
 
@@ -16,6 +24,7 @@ const LoginSharedInputs = ({
   handleSubmit,
   values,
   errors,
+  isValid,
   handleChange,
 }: LoginSharedInputsProps) => {
   return (
@@ -27,15 +36,19 @@ const LoginSharedInputs = ({
             name='email'
             value={values.email}
             onChange={handleChange('email')}
+            helperText={errors.email}
           />
 
           <TextField
             name='password'
             type='password'
             value={values.password}
+            helperText={errors.password}
             onChange={handleChange('password')}
           />
-          <Button onClick={handleSubmit}>Login</Button>
+          <Button onClick={handleSubmit} disabled={!isValid}>
+            Login
+          </Button>
         </>
       ) : (
         <>
@@ -44,15 +57,19 @@ const LoginSharedInputs = ({
             name='email'
             value={values.email}
             onChange={handleChange('email')}
+            helperText={errors.email}
           />
 
           <TextField
             name='password'
             type='password'
             value={values.password}
+            helperText={errors.password}
             onChange={handleChange('password')}
           />
-          <Button onClick={handleSubmit}>Login</Button>
+          <Button onClick={handleSubmit} disabled={!isValid}>
+            Login
+          </Button>
         </>
       )}
     </div>

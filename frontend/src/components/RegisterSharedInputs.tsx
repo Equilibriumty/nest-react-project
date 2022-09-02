@@ -1,13 +1,21 @@
 import { Button, TextField, Typography } from '@mui/material';
-import { Formik } from 'formik';
-import React from 'react';
+import { FormikErrors } from 'formik';
+import { RegisterInitialValues } from '../types/validations';
 
 interface RegisterSharedInputsProps {
   role: string;
-  errors: any;
-  values: any;
-  handleSubmit: any;
-  handleChange: any;
+  errors: FormikErrors<RegisterInitialValues>;
+  values: RegisterInitialValues;
+  isValid: boolean;
+  handleSubmit: () => void;
+  handleChange: {
+    (e: React.ChangeEvent<any>): void;
+    <T = string | React.ChangeEvent<any>>(
+      field: T
+    ): T extends React.ChangeEvent<any>
+      ? void
+      : (e: string | React.ChangeEvent<any>) => void;
+  };
 }
 // TODO FIX TYPINGS AND ADD VALIDATION VIA YUP
 
@@ -16,6 +24,7 @@ const RegisterSharedInputs = ({
   handleSubmit,
   values,
   errors,
+  isValid,
   handleChange,
 }: RegisterSharedInputsProps) => {
   return (
@@ -27,19 +36,24 @@ const RegisterSharedInputs = ({
             name='email'
             value={values.email}
             onChange={handleChange('email')}
+            helperText={errors.email}
           />
           <TextField
             name='username'
             value={values.username}
             onChange={handleChange('username')}
+            helperText={errors.username}
           />
           <TextField
             name='password'
             type='password'
             value={values.password}
             onChange={handleChange('password')}
+            helperText={errors.password}
           />
-          <Button onClick={handleSubmit}>Register</Button>
+          <Button onClick={handleSubmit} disabled={!isValid}>
+            Register
+          </Button>
         </>
       ) : (
         <>
@@ -48,19 +62,24 @@ const RegisterSharedInputs = ({
             name='email'
             value={values.email}
             onChange={handleChange('email')}
+            helperText={errors.email}
           />
           <TextField
             name='username'
             value={values.username}
             onChange={handleChange('username')}
+            helperText={errors.username}
           />
           <TextField
             name='password'
             type='password'
             value={values.password}
             onChange={handleChange('password')}
+            helperText={errors.password}
           />
-          <Button onClick={handleSubmit}>Register</Button>
+          <Button onClick={handleSubmit} disabled={!isValid}>
+            Register
+          </Button>
         </>
       )}
     </div>

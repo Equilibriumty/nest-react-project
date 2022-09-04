@@ -5,9 +5,8 @@ export abstract class HttpBase {
   fetchingService: AxiosInstance;
   fetchingServiceWithHeaders: AxiosInstance;
   baseUrl: string;
-  // TODO FIX HARDCODED URL
-  constructor(baseUrl = 'http://localhost:3001') {
-    this.baseUrl = baseUrl!;
+  constructor(baseUrl = process.env.REACT_APP_API_URL!) {
+    this.baseUrl = baseUrl;
     this.fetchingService = axios;
     this.fetchingServiceWithHeaders = this.authAxios;
   }
@@ -19,7 +18,6 @@ export abstract class HttpBase {
   });
 
   private getFullApiUrl(specificApiRoute: string) {
-    console.log(this.baseUrl);
     return `${this.baseUrl}${specificApiRoute}`;
   }
 
@@ -42,8 +40,6 @@ export abstract class HttpBase {
     );
   }
   async regTeacher(registerTeacherApi: string, teacher: TeacherReg) {
-    console.log(this.getFullApiUrl(registerTeacherApi));
-
     return await this.fetchingServiceWithHeaders.post(
       this.getFullApiUrl(registerTeacherApi),
       teacher

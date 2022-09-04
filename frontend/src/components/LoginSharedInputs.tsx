@@ -17,7 +17,6 @@ interface LoginSharedInputsProps {
       : (e: string | React.ChangeEvent<any>) => void;
   };
 }
-// TODO FIX TYPINGS AND ADD VALIDATION VIA YUP
 
 const LoginSharedInputs = ({
   role,

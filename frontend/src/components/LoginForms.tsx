@@ -10,6 +10,7 @@ import { useMutation } from 'react-query';
 import authApi from '../service/auth.service';
 import { useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 const LoginForms = () => {
   const initialValues: LoginInitialValues = {
@@ -18,11 +19,13 @@ const LoginForms = () => {
     password: '',
   };
   const navigation = useNavigate();
+  const { login } = useAuth();
   const loginStudent = useMutation(
     (values: StudentLog) => authApi.loginStudent(values),
     {
       onSuccess: async (response: AxiosResponse) => {
         localStorage.setItem('token', response.data.token);
+        login();
         navigation('/');
       },
       onError: (error) => console.log(error),
@@ -34,6 +37,7 @@ const LoginForms = () => {
     {
       onSuccess: async (response: AxiosResponse) => {
         localStorage.setItem('token', response.data.token);
+        login();
         navigation('/');
       },
       onError: (error) => console.log(error),

@@ -8,16 +8,16 @@ class AuthService extends HttpBase {
   loginStudentApi = '/auth/loginTeacher';
 
   async loginTeacher(teacher: TeacherLog) {
-    return this.logTeacher(this.loginTeacherApi, teacher);
+    return await this.logTeacher(this.loginTeacherApi, teacher);
   }
   async loginStudent(student: StudentLog) {
-    return this.logStudent(this.loginStudentApi, student);
+    return await this.logStudent(this.loginStudentApi, student);
   }
   async registerStudent(student: StudentReg) {
-    return this.regStudent(this.registerStudentApi, student);
+    return await this.regStudent(this.registerStudentApi, student);
   }
   async registerTeacher(teacher: TeacherReg) {
-    return this.regTeacher(this.registerTeacherApi, teacher);
+    return await this.regTeacher(this.registerTeacherApi, teacher);
   }
 }
 const authApi = new AuthService();

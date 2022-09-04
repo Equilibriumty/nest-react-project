@@ -36,6 +36,46 @@ export type RegisterInitialValues = {
   role: string;
 };
 
+export type Course = {
+  id?: string;
+  title: string;
+  description: string;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
+  teacherId: string;
+};
+
+export type Task = {
+  taskId?: string;
+  title: string;
+  description: string;
+  uploadedAt?: string | Date;
+  mark: number;
+  fileId: string;
+  courseId?: string;
+};
+
+export type Student = {
+  id?: string;
+  username: string;
+  email: string;
+  password: string;
+  role?: 'STUDENT';
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
+  courses?: Course[];
+};
+export type Teacher = {
+  id?: string;
+  username: string;
+  email: string;
+  password: string;
+  role?: 'TEACHER';
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
+  courses?: Course[];
+};
+
 export type StudentReg = RegisterInitialValues;
 export type TeacherReg = RegisterInitialValues;
 export type TeacherLog = LoginInitialValues;

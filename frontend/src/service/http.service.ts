@@ -1,5 +1,11 @@
 import axios, { AxiosInstance } from 'axios';
-import { StudentLog, StudentReg, TeacherLog, TeacherReg } from '../types/types';
+import {
+  StudentLog,
+  StudentReg,
+  Teacher,
+  TeacherLog,
+  TeacherReg,
+} from '../types/types';
 
 export abstract class HttpBase {
   fetchingService: AxiosInstance;
@@ -40,9 +46,15 @@ export abstract class HttpBase {
     );
   }
   async regTeacher(registerTeacherApi: string, teacher: TeacherReg) {
-    return await this.fetchingServiceWithHeaders.post(
+    return await this.fetchingServiceWithHeaders.post<Teacher>(
       this.getFullApiUrl(registerTeacherApi),
       teacher
+    );
+  }
+
+  async getTeacher(getTeacherApi: string, id: string) {
+    return await this.fetchingService.get(
+      this.getFullApiUrl(getTeacherApi + id)
     );
   }
 }

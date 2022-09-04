@@ -32,7 +32,7 @@ export class AuthService {
     return null;
   }
 
-  generateJwtToken(data: { id: number; email: string }) {
+  generateJwtToken(data: { id: string; email: string }) {
     const payload = { email: data.email, sub: data.id };
     return this.jwtService.sign(payload, {
       secret: process.env.SECRET_KEY,

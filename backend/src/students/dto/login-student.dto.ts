@@ -1,8 +1,9 @@
-import { IsEmail, IsInt, Length } from 'class-validator';
+import { IsEmail, IsString, IsUUID, Length } from 'class-validator';
 
 export class LoginStudentDto {
-  @IsInt()
-  id: number;
+  @IsString()
+  @IsUUID()
+  id: string;
 
   @IsEmail(undefined, { message: 'Wrong email' })
   email: string;

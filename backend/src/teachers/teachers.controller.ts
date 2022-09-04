@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { TeachersService } from './teachers.service';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
@@ -25,9 +26,16 @@ export class TeachersController {
     return this.teachersService.create(createTeacherDto);
   }
 
-  @Post('/create-course')
-  createCourse(@Body() createCourseDto: Prisma.CourseCreateInput) {
-    return this.courseService.create(createCourseDto);
+  @Post('/:teacherId/create-course')
+  createCourse(
+    @Body()
+    createCourseDto: Prisma.CourseCreateInput,
+    @Param('teacherId') teacherId: string,
+  ) {
+    return this.courseService.create({
+      ...createCourseDto,
+      teacherId: teacherId,
+    });
   }
 
   @Get()
@@ -36,17 +44,17 @@ export class TeachersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: string) {
     return this.teachersService.findById(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateTeacherDto: UpdateTeacherDto) {
+  update(@Param('id') id: string, @Body() updateTeacherDto: UpdateTeacherDto) {
     return this.teachersService.update({ id: id }, updateTeacherDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  remove(@Param('id') id: string) {
     return this.teachersService.remove({ id: id });
   }
 }

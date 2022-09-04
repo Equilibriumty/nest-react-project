@@ -17,10 +17,10 @@ export class StudentsService {
   }
 
   async findAll(): Promise<Student[]> {
-    return await this.prisma.student.findMany({});
+    return await this.prisma.student.findMany({ include: { courses: true } });
   }
 
-  async findById(id: number): Promise<Student> {
+  async findById(id: string): Promise<Student> {
     return await this.prisma.student.findUnique({
       where: {
         id: id,
@@ -34,29 +34,6 @@ export class StudentsService {
     return await this.prisma.student.findUnique({
       where: {
         email: studentWhereUniqueInput.email,
-      },
-    });
-  }
-
-  async assignToACourse(
-    studentId: Prisma.TeacherWhereUniqueInput,
-    courseId: number,
-  ) {
-    const updatedStudent = await this.prisma.student.updateMany({
-      where: {
-        id: studentId.id,
-      },
-      data: {
-        courseId: courseId,
-      },
-    });
-
-    return await this.prisma.course.findUnique({
-      where: {
-        id: courseId,
-      },
-      include: {
-        students: true,
       },
     });
   }

@@ -15,18 +15,13 @@ export class TeachersService {
   async findAll(): Promise<Teacher[]> {
     return await this.prisma.teacher.findMany({
       include: {
-        courses: {
-          include: {
-            tasks: true,
-            students: true,
-          },
-        },
+        courses: true,
       },
     });
   }
 
-  async findById(id: number): Promise<Teacher> {
-    return await this.prisma.student.findUnique({
+  async findById(id: string): Promise<Teacher> {
+    return await this.prisma.teacher.findUnique({
       where: {
         id: id,
       },

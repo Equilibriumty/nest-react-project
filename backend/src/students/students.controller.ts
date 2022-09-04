@@ -19,7 +19,7 @@ export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
 
   @Post()
-  create(@Body() createStudentDto: CreateStudentDto) {
+  create(@Body() createStudentDto: Prisma.StudentCreateInput) {
     return this.studentsService.create(createStudentDto);
   }
 
@@ -30,41 +30,23 @@ export class StudentsController {
 
   @Get(':id')
   findOne(
-    @Param(
-      'id',
-      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
-    )
-    id: number,
+    @Param('id')
+    id: string,
   ) {
     return this.studentsService.findById(id);
   }
 
   @Put(':id')
   update(
-    @Param(
-      'id',
-      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
-    )
-    id: number,
+    @Param('id')
+    id: string,
     @Body() updateStudentDto: Prisma.StudentUpdateInput,
   ) {
     return this.studentsService.update({ id: id }, updateStudentDto);
   }
 
-  @Put('/assign/:id')
-  assign(
-    @Param(
-      'id',
-      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
-    )
-    id: number,
-    @Query() query: { courseId: number },
-  ) {
-    return this.studentsService.assignToACourse({ id: id }, +query.courseId);
-  }
-
   @Delete(':id')
-  remove(@Param('id', new ParseIntPipe()) id: number) {
+  remove(@Param('id') id: string) {
     return this.studentsService.remove({ id: id });
   }
 }

@@ -13,7 +13,7 @@ export class JwtTeacherStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: { sub: number; email: string }) {
+  async validate(payload: { sub: string; email: string }) {
     const data = { id: payload.sub, email: payload.email };
 
     const user = await this.teachersService.findById(data.id);

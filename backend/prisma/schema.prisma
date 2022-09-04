@@ -13,65 +13,48 @@ datasource db {
 }
 
 model Student {
-  id        Int                  @id @default(autoincrement())
-  username  String               @unique
-  email     String               @unique
+  id        String   @id @default(uuid())
+  username  String   @unique
+  email     String   @unique
   password  String
-  role      Role                 @default(STUDENT)
-  createdAt DateTime             @default(now())
-  updatedAt DateTime             @updatedAt
-  course    CoursesAndStudends[]
-  // Course             Course?              @relation(fields: [courseId], references: [id])
-  // courseId           Int?
-  Course    Course?              @relation(fields: [courseId], references: [id])
-  courseId  Int?
-}
-
-model CoursesAndStudends {
-  student   Student @relation(fields: [studentId], references: [id])
-  course    Course  @relation(fields: [courseId], references: [id])
-  studentId Int
-  courseId  Int
-  task      Task    @relation(fields: [taskId], references: [taskId])
-  taskId    Int
-
-  @@id([courseId, studentId, taskId])
+  role      Role     @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  courses   Course[]
 }
 
 model Teacher {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   username  String   @unique
   email     String   @unique
   password  String
   role      Role     @default(TEACHER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  courses   Course[]
+  Course    Course[]
 }
 
 model Task {
-  taskId             Int                  @id @default(autoincrement())
-  title              String
-  description        String
-  uploadedAt         DateTime             @default(now())
-  mark               Int
-  fileId             String
-  Course             Course?              @relation(fields: [courseId], references: [id])
-  courseId           Int?
-  CoursesAndStudends CoursesAndStudends[]
+  taskId      String   @id @default(uuid())
+  title       String
+  description String
+  uploadedAt  DateTime @default(now())
+  mark        Int
+  fileId      String
+  Course      Course?  @relation(fields: [courseId], references: [id])
+  courseId    String?
 }
 
 model Course {
-  id                 Int                  @id @default(autoincrement())
-  title              String
-  description        String
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  tasks              Task[]
-  Teacher            Teacher?             @relation(fields: [teacherId], references: [id])
-  teacherId          Int?
-  students           Student[]
-  CoursesAndStudends CoursesAndStudends[]
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  tasks       Task[]
+  Teacher     Teacher?  @relation(fields: [teacherId], references: [id])
+  teacherId   String
+  students    Student[]
 }
 
 enum Role {

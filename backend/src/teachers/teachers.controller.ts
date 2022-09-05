@@ -6,7 +6,7 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { TeachersService } from './teachers.service';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
@@ -41,6 +41,11 @@ export class TeachersController {
   @Get()
   findAll() {
     return this.teachersService.findAll();
+  }
+
+  @Get('/find')
+  findByEmail(@Query() query: { email: string }) {
+    return this.teachersService.findOne({ email: query.email });
   }
 
   @Get(':id')

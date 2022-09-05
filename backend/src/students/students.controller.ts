@@ -4,15 +4,12 @@ import {
   Body,
   Param,
   Delete,
-  ParseIntPipe,
-  HttpStatus,
   Put,
   Post,
   Query,
 } from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { Prisma } from '@prisma/client';
-import { CreateStudentDto } from './dto/create-student.dto';
 
 @Controller('students')
 export class StudentsController {
@@ -26,6 +23,11 @@ export class StudentsController {
   @Get()
   findAll() {
     return this.studentsService.findAll();
+  }
+
+  @Get('/find')
+  findByEmail(@Query() query: { email: string }) {
+    return this.studentsService.findOne({ email: query.email });
   }
 
   @Get(':id')

@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import {
+  Student,
   StudentLog,
   StudentReg,
   Teacher,
@@ -51,10 +52,28 @@ export abstract class HttpBase {
       teacher
     );
   }
-
-  async getTeacher(getTeacherApi: string, id: string) {
-    return await this.fetchingService.get(
+  async getStudent(getStudentApi: string, id: string, email?: string) {
+    if (email) {
+      const { data } = await this.fetchingService.get<Student>(
+        this.getFullApiUrl(getStudentApi + 'find?email=' + email)
+      );
+      return data;
+    }
+    const { data } = await this.fetchingService.get<Student>(
+      this.getFullApiUrl(getStudentApi + id)
+    );
+    return data;
+  }
+  async getTeacher(getTeacherApi: string, id: string, email?: string) {
+    if (email) {
+      const { data } = await this.fetchingService.get<Teacher>(
+        this.getFullApiUrl(getTeacherApi + 'find?email=' + email)
+      );
+      return data;
+    }
+    const { data } = await this.fetchingService.get<Teacher>(
       this.getFullApiUrl(getTeacherApi + id)
     );
+    return data;
   }
 }

@@ -24,7 +24,7 @@ export const registerValidationScheme = yup.object().shape({
 });
 
 export type LoginInitialValues = {
-  id: number;
+  id: string;
   email: string;
   password: string;
 };
@@ -64,6 +64,7 @@ export type Student = {
   createdAt?: string | Date;
   updatedAt?: string | Date;
   courses?: Course[];
+  token: string;
 };
 export type Teacher = {
   id?: string;
@@ -74,6 +75,7 @@ export type Teacher = {
   createdAt?: string | Date;
   updatedAt?: string | Date;
   courses?: Course[];
+  token: string;
 };
 
 export type StudentReg = RegisterInitialValues;

@@ -26,7 +26,7 @@ const RootRoutes = () => {
   const MainRoute = () => {
     return (
       <Routes>
-        <Route path='/' element={<Main />} />
+        <Route index element={<Main />} />
       </Routes>
     );
   };

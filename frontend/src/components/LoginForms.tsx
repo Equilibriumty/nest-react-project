@@ -3,7 +3,9 @@ import LoginSharedInputs from './LoginSharedInputs';
 import {
   LoginInitialValues,
   loginValidationScheme,
+  Student,
   StudentLog,
+  Teacher,
   TeacherLog,
 } from '../types/types';
 import { useMutation } from 'react-query';
@@ -14,18 +16,19 @@ import { useAuth } from '../context/AuthContext';
 
 const LoginForms = () => {
   const initialValues: LoginInitialValues = {
-    id: 123,
+    id: 'c8bc55c8-785f-4429-b863-faefc843181e',
     email: '',
     password: '',
   };
   const navigation = useNavigate();
-  const { login } = useAuth();
+  const { login, setUser } = useAuth();
   const loginStudent = useMutation(
     (values: StudentLog) => authApi.loginStudent(values),
     {
-      onSuccess: async (response: AxiosResponse) => {
+      onSuccess: async (response: AxiosResponse<Student>) => {
         localStorage.setItem('token', response.data.token);
         login();
+        setUser(response.data);
         navigation('/');
       },
       onError: (error) => console.log(error),
@@ -35,9 +38,10 @@ const LoginForms = () => {
   const loginTeacher = useMutation(
     (values: TeacherLog) => authApi.loginTeacher(values),
     {
-      onSuccess: async (response: AxiosResponse) => {
+      onSuccess: async (response: AxiosResponse<Teacher>) => {
         localStorage.setItem('token', response.data.token);
         login();
+        setUser(response.data);
         navigation('/');
       },
       onError: (error) => console.log(error),

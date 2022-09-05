@@ -3,6 +3,7 @@ import RegisterSharedInputs from './RegisterSharedInputs';
 import {
   RegisterInitialValues,
   registerValidationScheme,
+  Student,
   StudentReg,
   TeacherReg,
 } from '../types/types';
@@ -10,10 +11,11 @@ import authApi from '../service/auth.service';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { AxiosResponse } from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 const RegisterForms = () => {
   const navigation = useNavigate();
-
+  const { setUser } = useAuth();
   const initialTeacherValues: RegisterInitialValues = {
     email: '',
     username: '',
@@ -29,8 +31,9 @@ const RegisterForms = () => {
   const registerStudent = useMutation(
     (values: StudentReg) => authApi.registerStudent(values),
     {
-      onSuccess: async (response: AxiosResponse) => {
+      onSuccess: async (response: AxiosResponse<Student>) => {
         localStorage.setItem('token', response.data.token);
+        setUser(response.data);
         navigation('/');
       },
       onError: (error) => console.log(error),
@@ -42,6 +45,7 @@ const RegisterForms = () => {
     {
       onSuccess: async (response: AxiosResponse) => {
         localStorage.setItem('token', response.data.token);
+        setUser(response.data);
         navigation('/');
       },
       onError: (error) => console.log(error),

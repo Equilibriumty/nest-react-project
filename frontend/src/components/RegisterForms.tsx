@@ -1,4 +1,7 @@
 import { Formik, FormikHelpers } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import { AxiosResponse } from 'axios';
 import RegisterSharedInputs from './RegisterSharedInputs';
 import {
   RegisterInitialValues,
@@ -8,12 +11,9 @@ import {
   TeacherReg,
 } from '../types/types';
 import authApi from '../service/auth.service';
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
-import { AxiosResponse } from 'axios';
 import { useAuth } from '../context/AuthContext';
 
-const RegisterForms = () => {
+function RegisterForms() {
   const navigation = useNavigate();
   const { setUser } = useAuth();
   const initialTeacherValues: RegisterInitialValues = {
@@ -78,7 +78,7 @@ const RegisterForms = () => {
       >
         {({ values, handleChange, handleSubmit, errors, isValid }) => (
           <RegisterSharedInputs
-            role='teacher'
+            role="teacher"
             errors={errors}
             handleChange={handleChange}
             values={values}
@@ -95,7 +95,7 @@ const RegisterForms = () => {
       >
         {({ values, handleChange, handleSubmit, errors, isValid }) => (
           <RegisterSharedInputs
-            role='student'
+            role="student"
             errors={errors}
             handleChange={handleChange}
             values={values}
@@ -106,6 +106,6 @@ const RegisterForms = () => {
       </Formik>
     </div>
   );
-};
+}
 
 export default RegisterForms;

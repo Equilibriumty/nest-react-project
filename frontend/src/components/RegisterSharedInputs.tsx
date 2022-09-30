@@ -19,34 +19,34 @@ interface RegisterSharedInputsProps {
 }
 // TODO FIX TYPINGS AND ADD VALIDATION VIA YUP
 
-const RegisterSharedInputs = ({
+function RegisterSharedInputs({
   role,
   handleSubmit,
   values,
   errors,
   isValid,
   handleChange,
-}: RegisterSharedInputsProps) => {
+}: RegisterSharedInputsProps) {
   return (
     <div>
       {role === 'teacher' ? (
         <>
           <Typography>Register as teacher</Typography>
           <TextField
-            name='email'
+            name="email"
             value={values.email}
             onChange={handleChange('email')}
             helperText={errors.email}
           />
           <TextField
-            name='username'
+            name="username"
             value={values.username}
             onChange={handleChange('username')}
             helperText={errors.username}
           />
           <TextField
-            name='password'
-            type='password'
+            name="password"
+            type="password"
             value={values.password}
             onChange={handleChange('password')}
             helperText={errors.password}
@@ -59,20 +59,20 @@ const RegisterSharedInputs = ({
         <>
           <Typography>Register as student</Typography>
           <TextField
-            name='email'
+            name="email"
             value={values.email}
             onChange={handleChange('email')}
             helperText={errors.email}
           />
           <TextField
-            name='username'
+            name="username"
             value={values.username}
             onChange={handleChange('username')}
             helperText={errors.username}
           />
           <TextField
-            name='password'
-            type='password'
+            name="password"
+            type="password"
             value={values.password}
             onChange={handleChange('password')}
             helperText={errors.password}
@@ -84,6 +84,6 @@ const RegisterSharedInputs = ({
       )}
     </div>
   );
-};
+}
 
 export default RegisterSharedInputs;

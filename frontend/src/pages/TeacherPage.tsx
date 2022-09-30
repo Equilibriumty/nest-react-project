@@ -2,9 +2,9 @@ import { Button } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useFetchTeacher } from '../hooks/useFetchTeacher';
+import useFetchTeacher from '../hooks/useFetchTeacher';
 
-const TeacherPage = () => {
+function TeacherPage() {
   const { user, logout } = useAuth();
   const { data, error, isLoading } = useFetchTeacher(user.id!, user.email);
   const navigate = useNavigate();
@@ -20,6 +20,6 @@ const TeacherPage = () => {
       <div>{data?.username}</div>
     </div>
   );
-};
+}
 
 export default TeacherPage;

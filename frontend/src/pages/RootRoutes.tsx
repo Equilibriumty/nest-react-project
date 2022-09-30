@@ -5,7 +5,24 @@ import Login from './Login';
 import Main from './Main';
 import Register from './Register';
 
-const RootRoutes = () => {
+function AuthRoutes() {
+  return (
+    <Routes>
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
+  );
+}
+
+function MainRoute() {
+  return (
+    <Routes>
+      <Route index element={<Main />} />
+    </Routes>
+  );
+}
+
+function RootRoutes() {
   const { login, isAuthenticated } = useAuth();
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -14,23 +31,7 @@ const RootRoutes = () => {
     }
   }, [login]);
 
-  const AuthRoutes = () => {
-    return (
-      <Routes>
-        <Route path='/register' element={<Register />} />
-        <Route path='/login' element={<Login />} />
-      </Routes>
-    );
-  };
-
-  const MainRoute = () => {
-    return (
-      <Routes>
-        <Route index element={<Main />} />
-      </Routes>
-    );
-  };
   return <div>{isAuthenticated ? <MainRoute /> : <AuthRoutes />}</div>;
-};
+}
 
 export default RootRoutes;

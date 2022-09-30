@@ -18,29 +18,29 @@ interface LoginSharedInputsProps {
   };
 }
 
-const LoginSharedInputs = ({
+function LoginSharedInputs({
   role,
   handleSubmit,
   values,
   errors,
   isValid,
   handleChange,
-}: LoginSharedInputsProps) => {
+}: LoginSharedInputsProps) {
   return (
     <div>
       {role === 'teacher' ? (
         <>
           <Typography>Login as teacher</Typography>
           <TextField
-            name='email'
+            name="email"
             value={values.email}
             onChange={handleChange('email')}
             helperText={errors.email}
           />
 
           <TextField
-            name='password'
-            type='password'
+            name="password"
+            type="password"
             value={values.password}
             helperText={errors.password}
             onChange={handleChange('password')}
@@ -53,15 +53,15 @@ const LoginSharedInputs = ({
         <>
           <Typography>Login as student</Typography>
           <TextField
-            name='email'
+            name="email"
             value={values.email}
             onChange={handleChange('email')}
             helperText={errors.email}
           />
 
           <TextField
-            name='password'
-            type='password'
+            name="password"
+            type="password"
             value={values.password}
             helperText={errors.password}
             onChange={handleChange('password')}
@@ -73,6 +73,6 @@ const LoginSharedInputs = ({
       )}
     </div>
   );
-};
+}
 
 export default LoginSharedInputs;

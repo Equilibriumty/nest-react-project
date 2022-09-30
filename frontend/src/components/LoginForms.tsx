@@ -1,4 +1,7 @@
 import { Formik, FormikHelpers } from 'formik';
+import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import { AxiosResponse } from 'axios';
 import LoginSharedInputs from './LoginSharedInputs';
 import {
   LoginInitialValues,
@@ -8,13 +11,10 @@ import {
   Teacher,
   TeacherLog,
 } from '../types/types';
-import { useMutation } from 'react-query';
 import authApi from '../service/auth.service';
-import { useNavigate } from 'react-router-dom';
-import { AxiosResponse } from 'axios';
 import { useAuth } from '../context/AuthContext';
 
-const LoginForms = () => {
+function LoginForms() {
   const initialValues: LoginInitialValues = {
     id: 'c8bc55c8-785f-4429-b863-faefc843181e',
     email: '',
@@ -72,7 +72,7 @@ const LoginForms = () => {
       >
         {({ values, handleChange, handleSubmit, errors, isValid }) => (
           <LoginSharedInputs
-            role='teacher'
+            role="teacher"
             errors={errors}
             handleChange={handleChange}
             values={values}
@@ -89,7 +89,7 @@ const LoginForms = () => {
       >
         {({ values, handleChange, handleSubmit, errors, isValid }) => (
           <LoginSharedInputs
-            role='student'
+            role="student"
             errors={errors}
             handleChange={handleChange}
             values={values}
@@ -100,6 +100,6 @@ const LoginForms = () => {
       </Formik>
     </div>
   );
-};
+}
 
 export default LoginForms;

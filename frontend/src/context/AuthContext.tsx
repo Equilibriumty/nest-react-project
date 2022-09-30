@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { Student, Teacher } from '../types/types';
 
 interface AuthContextType {
@@ -31,7 +31,7 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-const AuthProvider = ({ children }: AuthProviderProps) => {
+function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState<Student | Teacher>({
     email: '',
@@ -46,20 +46,22 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   });
 
   // TODO: FIX CONTEXT PROBLEM WITH USER DATA
-  const contextValue: AuthContextType = {
-    isAuthenticated,
-    user: userData,
-    login: () => setIsAuthenticated(true),
-    logout: () => {
-      setIsAuthenticated(false);
-      setUserData({} as Teacher | Student);
-    },
-    setUser: (data) => setUserData(data),
-  };
+  const contextValue = useMemo(() => {
+    return {
+      isAuthenticated,
+      user: userData,
+      login: () => setIsAuthenticated(true),
+      logout: () => {
+        setIsAuthenticated(false);
+        setUserData({} as Teacher | Student);
+      },
+      setUser: (data: Student | Teacher) => setUserData(data),
+    };
+  }, [isAuthenticated, userData]);
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
-};
+}
 
 export const useAuth = () => useContext(AuthContext);
 

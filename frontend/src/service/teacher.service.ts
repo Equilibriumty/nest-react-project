@@ -1,5 +1,4 @@
-import {} from '../types/types';
-import { HttpBase } from './http.service';
+import HttpBase from './http.service';
 
 class TeachersService extends HttpBase {
   teachersApi = '/teachers/';
